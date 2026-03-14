@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vehicle Search</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#111;
+color:white;
+padding:40px;
+}
+
+.search-box{
+width:400px;
+}
+
+input{
+width:100%;
+padding:10px;
+font-size:16px;
+}
+
+#suggestions{
+background:#222;
+border:1px solid #444;
+}
+
+.suggestion{
+padding:8px;
+cursor:pointer;
+}
+
+.suggestion:hover{
+background:#333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Vehicle Search</h2>
+
+<div class="search-box">
+<input id="search" placeholder="Enter vehicle name...">
+<div id="suggestions"></div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
