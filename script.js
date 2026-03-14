@@ -1,5 +1,12 @@
 let vehicles = []
 
+function normalize(text){
+    return text
+        .toLowerCase()
+        .replace(/[-–—]/g,"")
+        .replace(/\s/g,"")
+}
+
 fetch("units.csv")
 .then(response => response.text())
 .then(text => {
@@ -10,10 +17,11 @@ fetch("units.csv")
 
         const columns = row.split(",")
 
-        const name = columns[0]
+        const id = columns[0]
+        const english = columns[1]
 
-        if(name && name !== "English"){
-            vehicles.push(name.trim())
+        if(id && id.includes("_shop") && english){
+            vehicles.push(english.trim())
         }
 
     })
@@ -25,14 +33,14 @@ const suggestions = document.getElementById("suggestions")
 
 searchInput.addEventListener("input", function(){
 
-    const value = this.value.toLowerCase()
+    const value = normalize(this.value)
 
     suggestions.innerHTML = ""
 
     if(value.length === 0) return
 
     const matches = vehicles
-        .filter(v => v.toLowerCase().includes(value))
+        .filter(v => normalize(v).includes(value))
         .slice(0,10)
 
     matches.forEach(vehicle => {
@@ -43,10 +51,8 @@ searchInput.addEventListener("input", function(){
         div.textContent = vehicle
 
         div.onclick = () => {
-
             searchInput.value = vehicle
             suggestions.innerHTML = ""
-
         }
 
         suggestions.appendChild(div)
