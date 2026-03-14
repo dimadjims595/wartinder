@@ -20,8 +20,13 @@ fetch("units.csv")
         const id = columns[0]
         const english = columns[1]
 
-        if(id && id.includes("_shop") && english){
-            vehicles.push(english.trim())
+        if(id && english){
+
+            vehicles.push({
+                id: id.trim(),
+                name: english.trim()
+            })
+
         }
 
     })
@@ -40,7 +45,10 @@ searchInput.addEventListener("input", function(){
     if(value.length === 0) return
 
     const matches = vehicles
-        .filter(v => normalize(v).includes(value))
+        .filter(v =>
+            normalize(v.name).includes(value) &&
+            v.id.includes("_shop")
+        )
         .slice(0,10)
 
     matches.forEach(vehicle => {
@@ -48,10 +56,10 @@ searchInput.addEventListener("input", function(){
         const div = document.createElement("div")
 
         div.className = "suggestion"
-        div.textContent = vehicle
+        div.textContent = vehicle.name
 
         div.onclick = () => {
-            searchInput.value = vehicle
+            searchInput.value = vehicle.name
             suggestions.innerHTML = ""
         }
 
